@@ -5,9 +5,7 @@ import { Box, Text } from "ink";
 export const ZigZag = () => {
 	const [inputString, setInputString] = useState<string>("");
 	const [isTextSubmited, setTextSubmited] = useState<boolean>(false);
-
 	const [encryptedString, setEncryptedString] = useState<string>("");
-
 	const [keyString, setKeyString] = useState<string>("");
 
 	const handleEncrypt = (): void => {
@@ -66,44 +64,44 @@ export const ZigZag = () => {
 		setEncryptedString(totalString);
 	};
 
+	if (encryptedString) {
+		return (
+			<Box>
+				<Box marginRight={1}>
+					<Text>Encrypted String: {encryptedString}</Text>
+				</Box>
+			</Box>
+		);
+	}
+
+	if (isTextSubmited) {
+		return (
+			<Box>
+				<Box marginRight={1}>
+					<Text>Enter key:</Text>
+				</Box>
+				<TextInput
+					value={keyString}
+					onChange={(e: string) => (isNaN(Number(e)) ? null : setKeyString(e))}
+					onSubmit={handleEncrypt}
+				/>
+			</Box>
+		);
+	}
+
 	return (
 		<Box>
-			{isTextSubmited ? (
-				<>
-					{encryptedString ? (
-						<>
-							<Box marginRight={1}>
-								<Text>Encrypted String: {encryptedString}</Text>
-							</Box>
-						</>
-					) : (
-						<>
-							<Box marginRight={1}>
-								<Text>Enter key:</Text>
-							</Box>
-							<TextInput
-								value={keyString}
-								onChange={(e: string) =>
-									isNaN(Number(e)) ? null : setKeyString(e)
-								}
-								onSubmit={handleEncrypt}
-							/>
-						</>
-					)}
-				</>
-			) : (
-				<>
-					<Box marginRight={1}>
-						<Text>Enter text to encrypt:</Text>
-					</Box>
+			<>
+				<Box marginRight={1}>
+					<Text>Enter text to encrypt:</Text>
+				</Box>
 
-					<TextInput
-						value={inputString}
-						onChange={(e: string) => setInputString(e)}
-						onSubmit={() => setTextSubmited(true)}
-					/>
-				</>
-			)}
+				<TextInput
+					value={inputString}
+					onChange={(e: string) => setInputString(e)}
+					onSubmit={() => setTextSubmited(true)}
+				/>
+			</>
 		</Box>
 	);
 };
